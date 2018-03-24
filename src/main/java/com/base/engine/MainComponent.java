@@ -64,13 +64,14 @@ public class MainComponent {
 
                 Time.setDelta(frameTime);
 
+                Input.update();
+
                 game.input();
                 game.update();
 
                 if(frameCounter >= Time.SECOND)
                 {
                     System.out.println(frames);
-                    System.out.println(frameCounter);
                     frames = 0;
                     frameCounter = 0;
                 }
@@ -81,9 +82,12 @@ public class MainComponent {
             }
             else
             {
-                try {
+                try
+                {
                     Thread.sleep(1);
-                } catch (InterruptedException e) {
+                }
+                catch (InterruptedException e)
+                {
                     e.printStackTrace();
                 }
             }
