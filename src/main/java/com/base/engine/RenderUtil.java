@@ -23,4 +23,9 @@ public class RenderUtil
         // TODO : Depth clamp for later
         glEnable(GL_FRAMEBUFFER_SRGB);
     }
+
+    public static String getOpenGLVersion()
+    {
+        return glGetString(GL_VERSION);
+    }
 }
