@@ -25,7 +25,11 @@ public class Game {
         shader.addVertexShader(ResourceLoader.loadShader("basicVertex.vs"));
         shader.addFragmentShader(ResourceLoader.loadShader("basicFragment.fs"));
 
+
         shader.compileShader();
+        shader.bind();
+
+        shader.addUniform("uniformFloat");
     }
 
     public void input()
@@ -43,15 +47,16 @@ public class Game {
             System.out.println("We've just released right mouse button!");
     }
 
+    float temp = 0.0f;
     public void update()
     {
-
+        temp += Time.getDelta();
+        shader.setUniformf("uniformFloat", (float)Math.abs(Math.sin(temp)));
     }
 
     public void render()
     {
         mesh.draw();
-        shader.bind();
     }
 
 }
