@@ -18,7 +18,7 @@ public class Vector2f {
 
     public float dot(Vector2f r)
     {
-        return x*r.getX() + y*r.getY();
+        return x*r.GetX() + y*r.GetY();
     }
 
     public Vector2f normalize()
@@ -41,7 +41,7 @@ public class Vector2f {
 
     public Vector2f add(Vector2f r)
     {
-        return new Vector2f(x + r.getX(), y + r.getY());
+        return new Vector2f(x + r.GetX(), y + r.GetY());
     }
 
     public Vector2f add(float r)
@@ -52,7 +52,7 @@ public class Vector2f {
 
     public Vector2f sub(Vector2f r)
     {
-        return new Vector2f(x - r.getX(), y - r.getY());
+        return new Vector2f(x - r.GetX(), y - r.GetY());
     }
 
     public Vector2f sub(float r)
@@ -62,7 +62,7 @@ public class Vector2f {
 
     public Vector2f mul(Vector2f r)
     {
-        return new Vector2f(x * r.getX(), y * r.getY());
+        return new Vector2f(x * r.GetX(), y * r.GetY());
     }
 
     public Vector2f mul(float r)
@@ -71,7 +71,7 @@ public class Vector2f {
     }
     public Vector2f div(Vector2f r)
     {
-        return new Vector2f(x / r.getX(), y / r.getY());
+        return new Vector2f(x / r.GetX(), y / r.GetY());
     }
 
     public Vector2f div(float r)
@@ -83,19 +83,19 @@ public class Vector2f {
         return "("  + x + " "  + y + ")";
     }
 
-    public float getX() {
+    public float GetX() {
         return x;
     }
 
-    public void setX(float x) {
+    public void SetX(float x) {
         this.x = x;
     }
 
-    public float getY() {
+    public float GetY() {
         return y;
     }
 
-    public void setY(float y) {
+    public void SetY(float y) {
         this.y = y;
     }
 }

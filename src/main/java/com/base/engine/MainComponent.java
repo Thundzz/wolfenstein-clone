@@ -64,9 +64,9 @@ public class MainComponent {
 
                 Time.setDelta(frameTime);
 
-                Input.update();
 
                 game.input();
+                Input.Update();
                 game.update();
 
                 if(frameCounter >= Time.SECOND)

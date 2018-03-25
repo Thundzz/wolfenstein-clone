@@ -11,16 +11,16 @@ public class Game {
 
     public void input()
     {
-        if(Input.getKeyDown(Keyboard.KEY_UP))
+        if(Input.GetKeyDown(Keyboard.KEY_UP))
             System.out.println("We've just pressed up!");
 
-        if(Input.getKeyUp(Keyboard.KEY_UP))
+        if(Input.GetKeyUp(Keyboard.KEY_UP))
             System.out.println("We've just released up!");
 
-        if(Input.getMouseDown(1))
-            System.out.println("We've just right clicked at "+ Input.getMousePosition());
+        if(Input.GetMouseDown(1))
+            System.out.println("We've just right clicked at "+ Input.GetMousePosition());
 
-        if(Input.getMouseUp(1))
+        if(Input.GetMouseUp(1))
             System.out.println("We've just released right mouse button!");
     }
 
