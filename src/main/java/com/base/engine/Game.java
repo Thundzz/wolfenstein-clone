@@ -30,8 +30,8 @@ public class Game {
         transform = new Transform();
         transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000f);
 
-        shader.addVertexShader(ResourceLoader.loadShader("basicVertex.vs"));
-        shader.addFragmentShader(ResourceLoader.loadShader("basicFragment.fs"));
+        shader.addVertexShader(ResourceLoader.loadShader("basicVertex120.vs"));
+        shader.addFragmentShader(ResourceLoader.loadShader("basicFragment120.fs"));
 
 
         shader.compileShader();
