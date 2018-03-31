@@ -10,10 +10,10 @@ public class Game {
 
     public Game()
     {
-        mesh = new Mesh();
+        mesh = ResourceLoader.loadMesh("box.obj");
         shader = new Shader();
 
-        Vertex[] vertices = new Vertex[]{
+     /*   Vertex[] vertices = new Vertex[]{
                 new Vertex(new Vector3f(-1, -1, 0)),
                 new Vertex(new Vector3f(0,  1, 0)),
                 new Vertex(new Vector3f(1, -1, 0)),
@@ -25,7 +25,7 @@ public class Game {
                                     2, 1, 0,
                                     0, 2, 3  };
 
-        mesh.addVertices(vertices, indices);
+        mesh.addVertices(vertices, indices);*/
 
         transform = new Transform();
 
@@ -62,7 +62,7 @@ public class Game {
 
         transform.setTranslation(sinTemp, 0, 0);
         transform.setRotation(0, sinTemp * 180, 0);
-        //transform.setScale(sinTemp, sinTemp, sinTemp);
+        transform.setScale(0.7f*sinTemp, 0.7f*sinTemp, 0.7f*sinTemp);
 
     }
 
