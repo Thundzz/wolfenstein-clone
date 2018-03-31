@@ -160,25 +160,25 @@ public class Input
     public static void Update()
     {
         for(int i = 0; i < NUM_KEYCODES; i++)
-            m_lastKeys[i] = GetKey(i);
+            m_lastKeys[i] = getKey(i);
 
         for(int i = 0; i < NUM_MOUSEBUTTONS; i++)
             m_lastMouse[i] = GetMouse(i);
     }
 
-    public static boolean GetKey(int keyCode)
+    public static boolean getKey(int keyCode)
     {
         return Keyboard.isKeyDown(keyCode);
     }
 
     public static boolean GetKeyDown(int keyCode)
     {
-        return GetKey(keyCode) && !m_lastKeys[keyCode];
+        return getKey(keyCode) && !m_lastKeys[keyCode];
     }
 
     public static boolean GetKeyUp(int keyCode)
     {
-        return !GetKey(keyCode) && m_lastKeys[keyCode];
+        return !getKey(keyCode) && m_lastKeys[keyCode];
     }
 
     public static boolean GetMouse(int mouseButton)

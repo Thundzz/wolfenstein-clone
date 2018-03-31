@@ -7,12 +7,13 @@ public class Game {
     private Mesh mesh;
     private Shader shader;
     private Transform transform;
+    private Camera camera;
 
     public Game()
     {
         mesh = ResourceLoader.loadMesh("box.obj");
         shader = new Shader();
-
+        camera = new Camera();
      /*   Vertex[] vertices = new Vertex[]{
                 new Vertex(new Vector3f(-1, -1, 0)),
                 new Vertex(new Vector3f(0,  1, 0)),
@@ -29,6 +30,7 @@ public class Game {
 
         transform = new Transform();
         transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000f);
+        Transform.setCamera(camera);
 
         shader.addVertexShader(ResourceLoader.loadShader("basicVertex120.vs"));
         shader.addFragmentShader(ResourceLoader.loadShader("basicFragment120.fs"));
@@ -41,7 +43,8 @@ public class Game {
 
     public void input()
     {
-        if(Input.GetKeyDown(Keyboard.KEY_UP))
+        camera.input();
+        /*if(Input.GetKeyDown(Keyboard.KEY_UP))
             System.out.println("We've just pressed up!");
 
         if(Input.GetKeyUp(Keyboard.KEY_UP))
@@ -52,6 +55,7 @@ public class Game {
 
         if(Input.GetMouseUp(1))
             System.out.println("We've just released right mouse button!");
+            */
     }
 
     float temp = 0.0f;
