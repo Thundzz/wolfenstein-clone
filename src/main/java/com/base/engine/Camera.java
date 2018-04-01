@@ -26,6 +26,11 @@ public class Camera
     public void input()
     {
         float sensitivity = 0.5f;
+        if(Input.getKey(Input.KEY_ESCAPE))
+        {
+            Input.setCursor(true);
+            mouseLocked = false;
+        }
         if(Input.GetMouseDown(0))
         {
             Input.setMousePosition(centerPosition);

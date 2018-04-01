@@ -22,7 +22,7 @@ public class Game {
                 new Vertex(new Vector3f(-1, -1, 0), new Vector2f(0,0)),
                 new Vertex(new Vector3f(0,  1, 0), new Vector2f(0.5f,0)),
                 new Vertex(new Vector3f(1, -1, 0), new Vector2f(1.0f,0)),
-                new Vertex(new Vector3f(0, -1, 1), new Vector2f(0,0.5f))
+                new Vertex(new Vector3f(0, -1, 1), new Vector2f(0.5f,1.0f))
         };
 
         int[] indices = new int[]{  3, 1, 0,
