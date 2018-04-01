@@ -35,6 +35,11 @@ public class RenderUtil
         glEnable(GL_FRAMEBUFFER_SRGB);
     }
 
+    public static void setClearColor(Vector3f color)
+    {
+        glClearColor(color.getX(), color.getY(), color.getZ(), 1.0f);
+    }
+
     public static String getOpenGLVersion()
     {
         return glGetString(GL_VERSION);

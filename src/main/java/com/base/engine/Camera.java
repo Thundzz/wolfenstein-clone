@@ -3,6 +3,9 @@ package com.base.engine;
 public class Camera
 {
     public static final Vector3f yAxis = new Vector3f(0,1,0);
+    private static Vector2f centerPosition = new Vector2f(Window.getWidth()/2, Window.getHeight()/2);
+
+    private boolean mouseLocked = false;
 
     private Vector3f pos;
     private Vector3f forward;
@@ -16,15 +19,20 @@ public class Camera
     public Camera(Vector3f pos, Vector3f forward, Vector3f up)
     {
         this.pos = pos;
-        this.forward = forward;
-        this.up = up;
-
-        up.normalize();
-        forward.normalize();
+        this.forward = forward.normalized();
+        this.up = up.normalized();
     }
 
     public void input()
     {
+        float sensitivity = 0.5f;
+        if(Input.GetMouseDown(0))
+        {
+            Input.setMousePosition(centerPosition);
+            Input.setCursor(false);
+            mouseLocked = true;
+        }
+
         float movAmt = (float) (10* Time.getDelta());
         float rotAmt = (float) (100 * Time.getDelta());
 
@@ -37,16 +45,28 @@ public class Camera
         if(Input.getKey(Input.KEY_D))
             move(getRight(), movAmt);
 
-        if(Input.getKey(Input.KEY_UP))
+       /* if(Input.getKey(Input.KEY_UP))
             rotateX(-rotAmt);
         if(Input.getKey(Input.KEY_DOWN))
             rotateX(rotAmt);
         if(Input.getKey(Input.KEY_LEFT))
             rotateY(-rotAmt);
         if(Input.getKey(Input.KEY_RIGHT))
-            rotateY(rotAmt);
+            rotateY(rotAmt);*/
 
+        if(mouseLocked)
+        {
+            Vector2f deltaPos = Input.getMousePosition().sub(centerPosition);
+            boolean rotY = deltaPos.getX() != 0;
+            boolean rotX = deltaPos.getY() != 0;
+            if(rotY)
+                rotateY(deltaPos.getX() * sensitivity);
+            if(rotX)
+                rotateX(-deltaPos.getY() * sensitivity);
+            if(rotY || rotX)
+                Input.setMousePosition(centerPosition);
 
+        }
 
     }
 
@@ -57,40 +77,26 @@ public class Camera
 
     public void rotateY(float angle)
     {
-        Vector3f Haxis = yAxis.cross(forward);
-        Haxis.normalize();
-
-        forward.rotate(angle, yAxis);
-        forward.normalize();
-
-        up = forward.cross(Haxis);
-        up.normalize();
+        Vector3f Haxis = yAxis.cross(forward).normalized();
+        forward = forward.rotate(angle, yAxis).normalized();
+        up = forward.cross(Haxis).normalized();
     }
 
     public void rotateX(float angle)
     {
-        Vector3f Haxis = yAxis.cross(forward);
-        Haxis.normalize();
-
-        forward.rotate(angle, Haxis);
-        forward.normalize();
-
-        up = forward.cross(Haxis);
-        up.normalize();
+        Vector3f Haxis = yAxis.cross(forward).normalized();
+        forward = forward.rotate(angle, Haxis).normalized();
+        up = forward.cross(Haxis).normalized();
     }
 
     public Vector3f getLeft()
     {
-        Vector3f left = forward.cross(up);
-        left.normalize();
-        return left;
+        return forward.cross(up).normalized();
     }
 
     public Vector3f getRight()
     {
-        Vector3f right = up.cross(forward);
-        right.normalize();
-        return right;
+        return up.cross(forward).normalized();
     }
 
     public Vector3f getPos() {

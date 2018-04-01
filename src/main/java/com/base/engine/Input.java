@@ -196,17 +196,17 @@ public class Input
         return !GetMouse(mouseButton) && m_lastMouse[mouseButton];
     }
 
-    public static Vector2f GetMousePosition()
+    public static Vector2f getMousePosition()
     {
         return new Vector2f(Mouse.getX(), Mouse.getY());
     }
 
-    public static void SetMousePosition(Vector2f pos)
+    public static void setMousePosition(Vector2f pos)
     {
         Mouse.setCursorPosition((int)pos.getX(), (int)pos.getY());
     }
 
-    public static void SetCursor(boolean enabled)
+    public static void setCursor(boolean enabled)
     {
         Mouse.setGrabbed(!enabled);
     }
