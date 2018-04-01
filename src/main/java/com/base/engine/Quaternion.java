@@ -40,7 +40,7 @@ public class Quaternion {
     {
         float w_ = w* r.getW() - x * r.getX() - y * r.getY() - z * r.getZ();
         float x_ = x* r.getW() + w * r.getX() + y * r.getZ() - z * r.getY();
-        float y_ = z* r.getW() + w * r.getY() + z * r.getX() - x * r.getZ();
+        float y_ = y* r.getW() + w * r.getY() + z * r.getX() - x * r.getZ();
         float z_ = z* r.getW() + w * r.getZ() + x * r.getY() - y * r.getX();
 
         return new Quaternion(x_, y_, z_, w_);
