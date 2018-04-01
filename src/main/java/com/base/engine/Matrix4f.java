@@ -43,7 +43,7 @@ public class Matrix4f {
 
         Vector3f r = up;
         r.normalize();
-        r = r.cross(forward);
+        r = r.cross(f);
 
         Vector3f u = f.cross(r);
 
