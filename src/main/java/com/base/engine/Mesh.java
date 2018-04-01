@@ -48,7 +48,7 @@ public class Mesh
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.SIZE* 4, 0);
         glVertexAttribPointer(1, 2, GL_FLOAT, false, Vertex.SIZE* 4, 12);
-        glVertexAttribPointer(1, 3, GL_FLOAT, false, Vertex.SIZE* 4, 20);
+        glVertexAttribPointer(2, 3, GL_FLOAT, false, Vertex.SIZE* 4, 20);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
         glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
