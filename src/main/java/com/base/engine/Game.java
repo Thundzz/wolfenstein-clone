@@ -7,33 +7,37 @@ public class Game {
     private Mesh mesh;
     private Shader shader;
     private Transform transform;
+    private Texture texture;
     private Camera camera;
+
 
     public Game()
     {
-        mesh = ResourceLoader.loadMesh("box.obj");
+        //mesh = ResourceLoader.loadMesh("box.obj");
+        texture = ResourceLoader.loadTexture("test.png");
         shader = new Shader();
         camera = new Camera();
-     /*   Vertex[] vertices = new Vertex[]{
-                new Vertex(new Vector3f(-1, -1, 0)),
-                new Vertex(new Vector3f(0,  1, 0)),
-                new Vertex(new Vector3f(1, -1, 0)),
-                new Vertex(new Vector3f(0, -1, 1))
+        Vertex[] vertices = new Vertex[]{
+                new Vertex(new Vector3f(-1, -1, 0), new Vector2f(0,0)),
+                new Vertex(new Vector3f(0,  1, 0), new Vector2f(0.5f,0)),
+                new Vertex(new Vector3f(1, -1, 0), new Vector2f(1.0f,0)),
+                new Vertex(new Vector3f(0, -1, 1), new Vector2f(0,0.5f))
         };
 
-        int[] indices = new int[]{  0, 1, 3,
-                                    3, 1, 2,
-                                    2, 1, 0,
+        int[] indices = new int[]{  3, 1, 0,
+                                    2, 1, 3,
+                                    0, 1, 2,
                                     0, 2, 3  };
 
-        mesh.addVertices(vertices, indices);*/
+        mesh = new Mesh();
+        mesh.addVertices(vertices, indices);
 
         transform = new Transform();
         transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000f);
         Transform.setCamera(camera);
 
-        shader.addVertexShader(ResourceLoader.loadShader("basicVertex120.vs"));
-        shader.addFragmentShader(ResourceLoader.loadShader("basicFragment120.fs"));
+        shader.addVertexShader(ResourceLoader.loadShader("basicVertex.vs"));
+        shader.addFragmentShader(ResourceLoader.loadShader("basicFragment.fs"));
 
 
         shader.compileShader();
@@ -75,6 +79,7 @@ public class Game {
     {
         shader.bind();
         shader.setUniform("transform", transform.getProjectedTransformation());
+        texture.bind();
         mesh.draw();
 
     }

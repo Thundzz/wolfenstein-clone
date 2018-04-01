@@ -203,7 +203,7 @@ public class Input
 
     public static void SetMousePosition(Vector2f pos)
     {
-        Mouse.setCursorPosition((int)pos.GetX(), (int)pos.GetY());
+        Mouse.setCursorPosition((int)pos.getX(), (int)pos.getY());
     }
 
     public static void SetCursor(boolean enabled)
