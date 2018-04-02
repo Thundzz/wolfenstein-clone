@@ -1,4 +1,4 @@
-name := "game-engine-tutorial"
+name := "wolfenstein-3d"
 
 organization := "com.base"
 

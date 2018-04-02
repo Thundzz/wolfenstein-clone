@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/game-engine-tutorial.iml" filepath="$PROJECT_DIR$/.idea/modules/game-engine-tutorial.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/game-engine-tutorial-build.iml" filepath="$PROJECT_DIR$/.idea/modules/game-engine-tutorial-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/wolfenstein-3d.iml" filepath="$PROJECT_DIR$/.idea/modules/wolfenstein-3d.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/wolfenstein-3d-build.iml" filepath="$PROJECT_DIR$/.idea/modules/wolfenstein-3d-build.iml" />
     </modules>
   </component>
 </project>
