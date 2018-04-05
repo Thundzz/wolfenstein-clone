@@ -15,7 +15,7 @@ BIG TOPICS:
 - More control over textures (Filtering, Formatting)
 - More friendly constructors (camera)
 - Window should have more properties (Center position, fullscreen, maybe mouse locking)
-- Better vector math (normalization, +=, Commonly used Vector constants)
+- Better vector math (normalization, +=, Commonly used Vector constants, Swizzling support)
 - Options class/system, some place to read values that the player choses
 - Centralized "level" or "scene" class that holds the data the game is using
 - 
