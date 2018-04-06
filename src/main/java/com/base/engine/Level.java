@@ -18,6 +18,9 @@ public class Level
     private Material material;
     private Transform transform;
 
+    // WARNING : TEMP VARIABLE;
+    private Door door;
+
     public Level(String fileName, String textureName)
     {
         level = new Bitmap("level1.png").flipY();
@@ -27,6 +30,10 @@ public class Level
 
         shader = BasicShader.getInstance();
         generateLevel();
+        Transform tempTransform = new Transform();
+        tempTransform.setTranslation(new Vector3f(8,0f,8));
+
+        door = new Door(tempTransform, material);
     }
 
 
@@ -37,7 +44,7 @@ public class Level
 
     public void update()
     {
-
+        door.update();
     }
 
     public void render()
@@ -45,6 +52,7 @@ public class Level
         shader.bind();
         shader.updateUniforms(transform.getTransformation(), transform.getProjectedTransformation(), material);
         mesh.draw();
+        door.render();
     }
 
     public Vector3f checkCollision(Vector3f oldPos, Vector3f newPos, float objectWidth, float objectLength)
@@ -65,6 +73,11 @@ public class Level
                     if((level.getPixel(i,j) & 0xFFFFFF) == 0)
                         collisionVector = collisionVector.mul(rectCollide(oldPos2, newPos2, objectSize, blockSize.mul(new Vector2f(i,j)), blockSize));
 
+            Vector2f doorSize = new Vector2f(Door.LENGTH, Door.WIDTH);
+
+            Vector3f doorPos3f = door.getTransform().getTranslation();
+            Vector2f doorPos2f = new Vector2f(doorPos3f.getX(), doorPos3f.getZ());
+            collisionVector = collisionVector.mul(rectCollide(oldPos2, newPos2, objectSize, doorPos2f, doorSize));
         }
 
         return new Vector3f(collisionVector.getX(), 0, collisionVector.getY());
@@ -215,5 +228,10 @@ public class Level
         vertices.toArray(vertArray);
         indices.toArray(intArray);
         mesh = new Mesh(vertArray, Util.toIntArray(intArray));
+    }
+
+    public Shader getShader()
+    {
+        return shader;
     }
 }

@@ -18,4 +18,10 @@ BIG TOPICS:
 - Better vector math (normalization, +=, Commonly used Vector constants, Swizzling support)
 - Options class/system, some place to read values that the player choses
 - Centralized "level" or "scene" class that holds the data the game is using
-- 
+- Game object class
+- Make all positioning names "position"
+- Make naming more consistent
+- Vectors swizzling
+
+- Eventually, make easier way to generate mesh
+- Eventually, make easy way of generating texture coordinates
