@@ -171,7 +171,7 @@ public class Input
         return Keyboard.isKeyDown(keyCode);
     }
 
-    public static boolean GetKeyDown(int keyCode)
+    public static boolean getKeyDown(int keyCode)
     {
         return getKey(keyCode) && !m_lastKeys[keyCode];
     }
