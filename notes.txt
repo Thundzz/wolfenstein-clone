@@ -1,6 +1,6 @@
 BIG TOPICS:
 - Rendering Engine!!
-
+- Physics Engine !!
 
 - Some way to insert game into engine.
 - Better scratchpad support
@@ -26,6 +26,9 @@ BIG TOPICS:
 - Give vectors a copy constructor.
 - Give vectors an interpolation method.
 - Transparency support
+- Sprite Support
+- Good way to compare vectors
+- 
 
 - Eventually, make easier way to generate mesh
 - Eventually, make easy way of generating texture coordinates

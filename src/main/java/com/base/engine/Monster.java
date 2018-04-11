@@ -23,6 +23,12 @@ public class Monster
     public static final int STATE_DYING = 3;
     public static final int STATE_DEAD = 4;
 
+    public static final float MOVE_SPEED = 1.0f; // TODO : Make this value appropriate.
+    public static final float MOVEMENT_STOP_DISTANCE = 1.5f;
+    public static final float MONSTER_WIDTH = 0.2f;
+    public static final float MONSTER_LENGTH = 0.2f;
+
+
     private static Mesh mesh;
     private Material material;
     private Transform transform;
@@ -31,7 +37,7 @@ public class Monster
     public Monster(Transform transform)
     {
         this.transform = transform;
-        this.state = STATE_IDLE;
+        this.state = STATE_CHASE;
         material = new Material(new Texture("SSWVA1.png"));
 
         if(mesh == null)
@@ -53,27 +59,44 @@ public class Monster
         }
     }
 
-    private void idleUpdate()
+    private void idleUpdate(Vector3f orientation, float distance)
     {
 
     }
 
-    private void chaseUpdate()
+    private void chaseUpdate(Vector3f orientation, float distance)
+    {
+
+        if(distance > MOVEMENT_STOP_DISTANCE)
+        {
+            float moveAmount = -MOVE_SPEED * (float) Time.getDelta();
+
+            Vector3f oldPos = transform.getTranslation();
+            Vector3f newPos = transform.getTranslation().add(orientation.mul(moveAmount));
+
+            Vector3f collisionVector = Game.getLevel().checkCollision(oldPos, newPos, MONSTER_WIDTH, MONSTER_LENGTH);
+
+            Vector3f movementVector = collisionVector.mul(orientation);
+
+            if(movementVector.length() > 0)
+                transform.setTranslation( transform.getTranslation().add(movementVector.mul(moveAmount)));
+
+            if(movementVector.sub(orientation).length() != 0)
+                Game.getLevel().openDoors(transform.getTranslation());
+        }
+    }
+
+    private void attackUpdate(Vector3f orientation, float distance)
     {
 
     }
 
-    private void attackUpdate()
+    private void dyingUpdate(Vector3f orientation, float distance)
     {
 
     }
 
-    private void dyingUpdate()
-    {
-
-    }
-
-    private void deadUpdate()
+    private void deadUpdate(Vector3f orientation, float distance)
     {
 
     }
@@ -83,10 +106,8 @@ public class Monster
         transform.getTranslation().setY(OFFSET_FROM_GROUND);
     }
 
-    private void faceTheCamera()
+    private void faceTheCamera(Vector3f directionToCamera)
     {
-        Vector3f directionToCamera = transform.getTranslation().sub(Transform.getCamera().getPos());
-
         float angleToFaceTheCamera = (float)Math.toDegrees(Math.atan(directionToCamera.getZ() / directionToCamera.getX()));
 
         if(directionToCamera.getX() > 0)
@@ -97,17 +118,21 @@ public class Monster
 
     public void update()
     {
+        Vector3f directionToCamera = transform.getTranslation().sub(Transform.getCamera().getPos());
+
+        float distance = directionToCamera.length();
+        Vector3f orientation = directionToCamera.div(distance);
 
         alignWithGround();
-        faceTheCamera();
+        faceTheCamera(orientation);
 
         switch(state)
         {
-            case STATE_IDLE: idleUpdate(); break;
-            case STATE_CHASE: chaseUpdate(); break;
-            case STATE_ATTACK: attackUpdate(); break;
-            case STATE_DYING: dyingUpdate(); break;
-            case STATE_DEAD: deadUpdate(); break;
+            case STATE_IDLE: idleUpdate(orientation, distance); break;
+            case STATE_CHASE: chaseUpdate(orientation, distance); break;
+            case STATE_ATTACK: attackUpdate(orientation, distance); break;
+            case STATE_DYING: dyingUpdate(orientation, distance); break;
+            case STATE_DEAD: deadUpdate(orientation, distance); break;
         }
     }
     public void render()
