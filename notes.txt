@@ -25,6 +25,7 @@ BIG TOPICS:
 - Make all time based on seconds rather than nanoseconds
 - Give vectors a copy constructor.
 - Give vectors an interpolation method.
+- Transparency support
 
 - Eventually, make easier way to generate mesh
 - Eventually, make easy way of generating texture coordinates
