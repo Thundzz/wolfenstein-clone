@@ -1,14 +1,24 @@
 package com.base.engine;
 
 
+import org.lwjgl.Sys;
+
+import java.util.Random;
+
 public class Player
 {
     private static final float MOUSE_SENSITIVITY = 0.5f;
     private static final float MOVE_SPEED = 8f;
     public static final float PLAYER_SIZE = 0.2f;
+    public static final float SHOOT_DISTANCE = 1000.0f;
     private static final Vector3f zeroVector = new Vector3f(0,0,0);
+    public static final int DAMAGE_MIN = 20;
+    public static final int DAMAGE_MAX = 60;
+    private static final int MAX_HEALTH = 100;
 
     private Camera camera;
+    private Random rand;
+    private int health;
 
     private boolean mouseLocked = false;
     private Vector2f centerPosition = new Vector2f(Window.getWidth()/2, Window.getHeight()/2);
@@ -17,10 +27,39 @@ public class Player
     public Player(Vector3f position)
     {
         camera = new Camera(position, new Vector3f(0,0,1), new Vector3f(0,1,0));
+        rand = new Random();
+        health = MAX_HEALTH;
+    }
+
+    public void damage(int amt)
+    {
+        health -= amt;
+
+        if(health > MAX_HEALTH)
+            health = MAX_HEALTH;
+
+        System.out.println(health);
+
+        if(health <= 0)
+        {
+            Game.setIsRunning(false);
+            System.out.println("You just died! GAME OVER!");
+        }
+
+
+    }
+
+    public int getDamage()
+    {
+        return rand.nextInt(DAMAGE_MAX - DAMAGE_MIN) + DAMAGE_MIN;
     }
 
     public void input()
     {
+        if(Input.getKeyDown(Input.KEY_E))
+        {
+            Game.getLevel().openDoors(camera.getPos());
+        }
         if(Input.getKey(Input.KEY_ESCAPE))
         {
             Input.setCursor(true);
@@ -28,9 +67,20 @@ public class Player
         }
         if(Input.GetMouseDown(0))
         {
-            Input.setMousePosition(centerPosition);
-            Input.setCursor(false);
-            mouseLocked = true;
+            if(!mouseLocked)
+            {
+                Input.setMousePosition(centerPosition);
+                Input.setCursor(false);
+                mouseLocked = true;
+            }
+            else
+            {
+                Vector2f lineStart = new Vector2f(camera.getPos().getX(), camera.getPos().getZ());
+                Vector2f castDirection = new Vector2f(camera.getForward().getX(), camera.getForward().getZ()).normalize();
+                Vector2f lineEnd = lineStart.add(castDirection.mul(SHOOT_DISTANCE));
+
+                Game.getLevel().checkIntesections(lineStart, lineEnd, true);
+            }
         }
 
         movementVector = zeroVector;

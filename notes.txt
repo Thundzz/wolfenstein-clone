@@ -29,6 +29,7 @@ BIG TOPICS:
 - Sprite Support
 - Good way to compare vectors
 - Vector2f cross product
+- Some way to display text
 
 - Eventually, make easier way to generate mesh
 - Eventually, make easy way of generating texture coordinates
