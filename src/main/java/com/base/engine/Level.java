@@ -88,9 +88,10 @@ public class Level
         for (Door door : doors)
             door.render();
 
-        player.render();
         for (Monster monster : monsters)
             monster.render();
+
+        player.render();
     }
 
     public Vector3f checkCollision(Vector3f oldPos, Vector3f newPos, float objectWidth, float objectLength)
