@@ -4,15 +4,13 @@ public class Game {
 
     private static Level level;
     private static boolean isRunning;
+    private static int levelNum = 0;
 
     public Game()
     {
-        Player player = new Player(new Vector3f(7,0.4375f,7));
-        level = new Level("level1.png", "WolfCollection.png", player);
+        loadNextLevel();
 
-        Transform.setProjection(70, Window.getWidth(), Window.getHeight(), 0.01f, 1000f);
-        Transform.setCamera(player.getCamera());
-        isRunning = true;
+
     }
 
     public void input()
@@ -41,6 +39,16 @@ public class Game {
     public static void setIsRunning(boolean value)
     {
         isRunning = value;
+    }
+
+    public static void loadNextLevel()
+    {
+        levelNum++;
+        level = new Level("level" + levelNum + ".png" , "WolfCollection_ignored.png");
+
+        Transform.setProjection(70, Window.getWidth(), Window.getHeight(), 0.01f, 1000f);
+        Transform.setCamera(level.getPlayer().getCamera());
+        isRunning = true;
     }
 
 }

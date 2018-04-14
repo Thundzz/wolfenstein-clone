@@ -144,16 +144,14 @@ public class Monster
             {
                 Vector2f lineStart = new Vector2f(transform.getTranslation().getX(), transform.getTranslation().getZ());
                 Vector2f castDirection = new Vector2f(orientation.getX(), orientation.getZ());//.rotate((rand.nextFloat() - 0.5f) * SHOT_ANGLE);
-
                 Vector2f lineEnd = lineStart.add(castDirection.mul(SHOOT_DISTANCE));
+
                 Vector2f collisionVector = Game.getLevel().checkIntesections(lineStart, lineEnd, false);
 
-                Vector2f playerIntersectVector = Game.getLevel().lineIntersectRect(lineStart, lineEnd,
-                        new Vector2f(Transform.getCamera().getPos().getX(), Transform.getCamera().getPos().getZ()),
-                        new Vector2f(Player.PLAYER_SIZE, Player.PLAYER_SIZE));
+                Vector2f playerIntersectVector = new Vector2f(Transform.getCamera().getPos().getX(), Transform.getCamera().getPos().getZ());
 
-                if (playerIntersectVector != null && (collisionVector == null ||
-                        playerIntersectVector.sub(lineStart).length() < collisionVector.sub(lineStart).length()))
+                if (collisionVector == null ||
+                        playerIntersectVector.sub(lineStart).length() < collisionVector.sub(lineStart).length())
                 {
                     state = STATE_CHASE;
                 }
@@ -196,7 +194,7 @@ public class Monster
                 transform.setTranslation( transform.getTranslation().add(movementVector.mul(moveAmount)));
 
             if(movementVector.sub(orientation).length() != 0)
-                Game.getLevel().openDoors(transform.getTranslation());
+                Game.getLevel().openDoors(transform.getTranslation(), false);
         }
         else
             state = STATE_ATTACK;

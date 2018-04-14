@@ -22,6 +22,10 @@ public class Level
     private Player player;
     private ArrayList<Door> doors;
     private ArrayList<Monster> monsters;
+    private ArrayList<Medkit> medkits;
+    private ArrayList<Vector3f> exitPoints;
+
+    private ArrayList<Medkit> medkitsToRemove;
 
     private ArrayList<Vector2f> collisionPosStart;
     private ArrayList<Vector2f> collisionPosEnd;
@@ -29,26 +33,32 @@ public class Level
     // WARNING : TEMP VARIABLE;
     //private Monster monster;
 
-    public Level(String fileName, String textureName, Player player)
+    public Player getPlayer()
     {
-        this.player = player;
-        level = new Bitmap("level1.png").flipY();
+        return player;
+    }
 
-        material =  new Material(new Texture("WolfCollection_ignored.png"));
+    public Level(String fileName, String textureName)
+    {
+        //this.player = player;
+        level = new Bitmap(fileName).flipY();
+
+        material =  new Material(new Texture(textureName));
         transform = new Transform();
 
         shader = BasicShader.getInstance();
-        monsters = new ArrayList<>();
+
+        exitPoints = new ArrayList<>();
 
         generateLevel();
-        Transform tempTransform = new Transform();
-        tempTransform.setTranslation(new Vector3f(11,0f,11));
+        //Transform tempTransform = new Transform();
+        //tempTransform.setTranslation(new Vector3f(11,0f,11));
 
         //door = new Door(tempTransform, material);
-        monsters.add(new Monster(tempTransform));
+        //monsters.add(new Monster(tempTransform));
     }
 
-    public void openDoors(Vector3f position)
+    public void openDoors(Vector3f position, boolean tryExitLevel)
     {
         for (Door door: doors)
         {
@@ -56,6 +66,14 @@ public class Level
             {
                 door.open();
             }
+        }
+
+        if(tryExitLevel)
+        {
+            for (Vector3f exitPoint : exitPoints)
+                if(exitPoint.sub(position).length() < OPEN_DISTANCE)
+                    Game.loadNextLevel();
+
         }
     }
 
@@ -76,8 +94,14 @@ public class Level
 
         player.update();
 
+        for (Medkit medkit : medkits)
+            medkit.update();
+
         for (Monster monster : monsters)
             monster.update();
+
+        for (Medkit medkit : medkitsToRemove)
+            medkits.remove(medkit);
     }
 
     public void render()
@@ -90,6 +114,9 @@ public class Level
 
         for (Monster monster : monsters)
             monster.render();
+
+        for (Medkit medkit : medkits)
+            medkit.render();
 
         player.render();
     }
@@ -360,12 +387,32 @@ public class Level
     {
         if(blueValue == 16)
             addDoor(x, y);
+
+        if(blueValue == 1)
+            player = new Player(new Vector3f((x + 0.5f) * SPOT_WIDTH, 0.4375f, (y + 0.5f) * SPOT_LENGTH));
+
+        if(blueValue == 128)
+        {
+            Transform monsterTransform= new Transform();
+            monsterTransform.setTranslation(new Vector3f((x + 0.5f) * SPOT_WIDTH, 0, (y + 0.5f) * SPOT_LENGTH));
+            monsters.add(new Monster(monsterTransform));
+        }
+
+        if(blueValue == 192)
+            medkits.add(new Medkit(new Vector3f((x + 0.5f) * SPOT_WIDTH, 0.0f, (y + 0.5f) * SPOT_LENGTH)));
+
+        if(blueValue == 97)
+            exitPoints.add(new Vector3f((x + 0.5f) * SPOT_WIDTH, 0.0f, (y + 0.5f) * SPOT_LENGTH));
     }
 
 
     private void generateLevel()
     {
         doors = new ArrayList<>();
+        monsters = new ArrayList<>();
+        medkits = new ArrayList<>();
+        medkitsToRemove = new ArrayList<>();
+
         collisionPosStart = new ArrayList<>();
         collisionPosEnd = new ArrayList<>();
 
@@ -431,6 +478,11 @@ public class Level
         vertices.toArray(vertArray);
         indices.toArray(intArray);
         mesh = new Mesh(vertArray, Util.toIntArray(intArray));
+    }
+
+    public void removeMedkit(Medkit medkit)
+    {
+        medkitsToRemove.add(medkit);
     }
 
     public Shader getShader()

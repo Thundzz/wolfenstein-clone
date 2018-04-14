@@ -36,7 +36,7 @@ public class Player
     private Random rand;
     private int health;
 
-    private boolean mouseLocked = false;
+    private static boolean mouseLocked = false;
     private Vector2f centerPosition = new Vector2f(Window.getWidth()/2, Window.getHeight()/2);
     private Vector3f movementVector;
 
@@ -67,6 +67,7 @@ public class Player
         health = MAX_HEALTH;
         gunTransform = new Transform();
         gunTransform.setTranslation(new Vector3f(7,0,7));
+        movementVector = zeroVector;
     }
 
     public void damage(int amt)
@@ -92,11 +93,21 @@ public class Player
         return rand.nextInt(DAMAGE_MAX - DAMAGE_MIN) + DAMAGE_MIN;
     }
 
+    public int getHealth()
+    {
+        return health;
+    }
+
+    public int getMaxHealth()
+    {
+        return MAX_HEALTH;
+    }
+
     public void input()
     {
         if(Input.getKeyDown(Input.KEY_E))
         {
-            Game.getLevel().openDoors(camera.getPos());
+            Game.getLevel().openDoors(camera.getPos(), true);
         }
         if(Input.getKey(Input.KEY_ESCAPE))
         {
