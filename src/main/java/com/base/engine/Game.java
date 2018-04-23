@@ -44,7 +44,7 @@ public class Game {
     public static void loadNextLevel()
     {
         levelNum++;
-        level = new Level("level" + levelNum + ".png" , "WolfCollection_ignored.png");
+        level = new Level("level" + levelNum + ".png" , "WolfCollection.png");
 
         Transform.setProjection(70, Window.getWidth(), Window.getHeight(), 0.01f, 1000f);
         Transform.setCamera(level.getPlayer().getCamera());
